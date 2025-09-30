@@ -9,7 +9,24 @@ services:
     ports:
       - "8000:8000"
     networks:
-        - app_network
-
+      - app_network
+  db:
+    image: postgres:14-alpine
+    container_name: db-dev
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=travel_serivce
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
 networks:
   app_network:
