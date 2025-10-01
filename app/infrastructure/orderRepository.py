@@ -18,4 +18,4 @@ class UpdateOrderSchema(BaseModel):
 
 class OrderRepository(BaseRepository[OrderORM, CreateOrderSchema, UpdateOrderSchema]):
     def update(self, *args, **kwargs):
-        raise NotImplementedError("orders are immutable dosen't updated")
+        raise NotImplementedError("orders are immutable")
