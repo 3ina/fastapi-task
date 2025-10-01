@@ -59,3 +59,10 @@ class TicketORM(Base):
         UniqueConstraint("ticket_number", name="uq_ticket_number"),
         UniqueConstraint("order_id", "passenger_id", name="uq_order_passenger"),
     )
+
+
+class AirportORM(Base):
+    __tablename__ = "airports"
+    id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
+    name = Column(VARCHAR(36), nullable=False)
+    code = Column(VARCHAR(36), nullable=False)
