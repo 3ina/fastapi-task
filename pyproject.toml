@@ -9,6 +9,8 @@ dependencies = [
     "fastapi==0.118.0",
     "gunicorn==23.0.0",
     "psycopg2-binary==2.9.10",
+    "pydantic-settings==2.11.0",
+    "python-dotenv==1.1.1",
     "sqlalchemy[asyncio]==2.0.43",
     "uvicorn==0.37.0",
 ]
@@ -42,3 +44,11 @@ quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "lf"
+
+[tool.ruff.lint.isort]
+known-first-party = ["my_app"]
+force-single-line = false
+split-on-trailing-comma = true
+combine-as-imports = true
+required-imports = ["from __future__ import annotations"]
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
