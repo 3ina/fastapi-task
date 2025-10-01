@@ -21,3 +21,13 @@ class UserORM(Base):
     phone_number = Column(VARCHAR(15), nullable=False)
 
     __table_args__ = (UniqueConstraint("username", name="uq_username"),)
+
+
+class OrderORM(Base):
+    __tablename__ = "orders"
+    id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
+    code = Column(VARCHAR(20), nullable=False)
+    price = Column(DECIMAL(19, 4))
+    user_id = Column(BigInteger, ForeignKey("users.id"), nullable=False)
+
+    __table_args__ = (UniqueConstraint("code", name="uq_code_order"),)
