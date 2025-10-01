@@ -31,3 +31,19 @@ class OrderORM(Base):
     user_id = Column(BigInteger, ForeignKey("users.id"), nullable=False)
 
     __table_args__ = (UniqueConstraint("code", name="uq_code_order"),)
+
+
+class Gender(enum.Enum):
+    men = "men"
+    women = "women"
+
+
+class PassengerORM(Base):
+    __tablename__ = "passengers"
+    id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
+    name = Column(VARCHAR(36), nullable=False)
+    national_id = Column(VARCHAR(10), nullable=False)
+    date_of_birth = Column(DATE, nullable=False)
+    gender = Column(Enum(Gender), nullable=False)
+    user_id = Column(BigInteger, ForeignKey("users.id"), nullable=False)
+
