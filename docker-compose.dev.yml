@@ -2,8 +2,8 @@ services:
   api:
     build:
       context: .
-      dockerfile : Dockerfile.dev
-    container_name :api
+      dockerfile: Dockerfile.dev
+    container_name: api
     volumes:
       - .:/app
     ports:
@@ -16,7 +16,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=travel_serivce
+      - POSTGRES_DB=travel_service
     volumes:
       - postgres_data_dev:/var/lib/postgresql/data
     ports:
@@ -30,3 +30,5 @@ services:
       - app_network
 networks:
   app_network:
+volumes:
+  postgres_data_dev:
