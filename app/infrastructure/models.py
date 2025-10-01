@@ -47,3 +47,15 @@ class PassengerORM(Base):
     gender = Column(Enum(Gender), nullable=False)
     user_id = Column(BigInteger, ForeignKey("users.id"), nullable=False)
 
+
+class TicketORM(Base):
+    __tablename__ = "tickets"
+    id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
+    ticket_number = Column(VARCHAR(50), nullable=False)
+    order_id = Column(BigInteger, ForeignKey("orders.id"), nullable=False)
+    passenger_id = Column(BigInteger, ForeignKey("passengers.id"), nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint("ticket_number", name="uq_ticket_number"),
+        UniqueConstraint("order_id", "passenger_id", name="uq_order_passenger"),
+    )
