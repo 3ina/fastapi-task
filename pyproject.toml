@@ -55,9 +55,6 @@ known-first-party = ["my_app"]
 force-single-line = false
 split-on-trailing-comma = true
 combine-as-imports = true
-required-imports = ["from __future__ import annotations"]
-sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 
 
-[tool.pyright]
-extraPaths = ["./app"]
+
