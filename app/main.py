@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from app.core.config import settings
 from contextlib import asynccontextmanager
 from app.core.database import Base, engine
+from app.interfaces.users_api import router as user_router
 
 
 @asynccontextmanager
@@ -18,3 +19,5 @@ app = FastAPI(
     debug=settings.DEBUG,
     lifespan=lifespan,
 )
+
+app.include_router(user_router)
