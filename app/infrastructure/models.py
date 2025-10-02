@@ -20,7 +20,10 @@ class UserORM(Base):
     name = Column(VARCHAR(36), nullable=False)
     phone_number = Column(VARCHAR(15), nullable=False)
 
-    __table_args__ = (UniqueConstraint("username", name="uq_username"),)
+    __table_args__ = (
+        UniqueConstraint("username", name="uq_username"),
+        UniqueConstraint("phone_number", name="uq_phone_number"),
+    )
 
 
 class OrderORM(Base):
