@@ -9,6 +9,10 @@ class UserAlreadyExistsException(ServiceException):
         super().__init__(f"User with {field} '{value}' already exists.")
 
 
+class UsernameNotFound(ServiceException):
+    pass
+
+
 class IncorrectCredentialsException(ServiceException):
     pass
 
