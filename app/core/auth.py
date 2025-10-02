@@ -2,6 +2,8 @@ from app.core.config import settings
 from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
+from fastapi import Depends
+from fastapi.security import OAuth2PasswordBearer
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = "HS256"
@@ -11,6 +13,12 @@ REFRESH_TOKEN_EXPIRES_SECONDS = 900
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+oauth2_schema = OAuth2PasswordBearer(tokenUrl="/token/swagger")
+
+
+def get_password_hash(password: str) -> str:
+    return pwd_context.hash(password)
 
 
 def verify_password(plain_text: str, hashed_password: str) -> bool:
