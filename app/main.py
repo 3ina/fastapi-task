@@ -31,3 +31,6 @@ async def generic_app_error_handler(request: Request, exc: AppException):
         status_code=500,
         content={"detail": f"{str(exc)}"},
     )
+
+
+# TODO : imeplememt exceptions handler for user not found
