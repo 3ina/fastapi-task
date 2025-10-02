@@ -1,8 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from app.core.config import settings
 from contextlib import asynccontextmanager
 from app.core.database import Base, engine
 from app.interfaces.users_api import router as user_router
+from app.exceptions.baseExcption import AppException
 
 
 @asynccontextmanager
@@ -21,3 +23,11 @@ app = FastAPI(
 )
 
 app.include_router(user_router)
+
+
+@app.exception_handler(AppException)
+async def generic_app_error_handler(request: Request, exc: AppException):
+    return JSONResponse(
+        status_code=500,
+        content={"detail": f"{str(exc)}"},
+    )
