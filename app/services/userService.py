@@ -1,5 +1,7 @@
+from app.infrastructure.models import UserORM
 from app.infrastructure.userRepository import UserRepository, CreateUserSchema
-from app.core.auth import get_password_hash
+from app.core.auth import get_password_hash, verify_password
+from app.exceptions.userService import UsernameNotFound
 
 
 class UserService:
@@ -27,3 +29,21 @@ class UserService:
                 "username": db_obj.username,
             },
         }
+
+    async def authenticate_user(
+        self, *, username: str, password: str
+    ) -> UserORM | None:
+        db_user = await self.user_repo.get_by_username(username)
+        if db_user is None:
+            raise UsernameNotFound(f"username : {username} not found ")
+
+        if verify_password(password, str(db_user.password)):
+            return db_user
+        return None
+
+    async def get_by_username(self, *, username: str) -> UserORM | None:
+        db_user = await self.user_repo.get_by_username(username)
+        if db_user is None:
+            raise UsernameNotFound(f"username : {username} not found ")
+
+        return db_user
