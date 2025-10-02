@@ -1,10 +1,12 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+
 from app.core.config import settings
-from contextlib import asynccontextmanager
 from app.core.database import Base, engine
-from app.interfaces.users_api import router as user_router
 from app.exceptions.baseExcption import AppException
+from app.interfaces.users_api import router as user_router
 
 
 @asynccontextmanager

@@ -1,9 +1,10 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.database import get_db
-from app.services.userService import UserService
-from app.infrastructure.userRepository import UserRepository
-from app.infrastructure.models import UserORM
 from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.database import get_db
+from app.infrastructure.models import UserORM
+from app.infrastructure.userRepository import UserRepository
+from app.services.userService import UserService
 
 
 def get_user_repo(db: AsyncSession = Depends(get_db)):

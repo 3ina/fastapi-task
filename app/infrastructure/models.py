@@ -1,5 +1,5 @@
 import enum
-from app.core.database import Base
+
 from sqlalchemy import (
     DATE,
     DECIMAL,
@@ -10,6 +10,8 @@ from sqlalchemy import (
     ForeignKey,
     UniqueConstraint,
 )
+
+from app.core.database import Base
 
 
 class UserORM(Base):

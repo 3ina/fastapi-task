@@ -1,7 +1,7 @@
-from app.infrastructure.models import UserORM
-from app.infrastructure.userRepository import UserRepository, CreateUserSchema
 from app.core.auth import get_password_hash, verify_password
 from app.exceptions.userService import UsernameNotFound
+from app.infrastructure.models import UserORM
+from app.infrastructure.userRepository import CreateUserSchema, UserRepository
 
 
 class UserService:

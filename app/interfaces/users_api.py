@@ -1,16 +1,18 @@
-from fastapi import APIRouter, Depends, status, HTTPException
-from pydantic import BaseModel
-from app.services.userService import UserService
-from app.core.dependencies import get_user_service
-from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
+from jose import jwt
+from pydantic import BaseModel
+
 from app.core.auth import (
     ALGORITHM,
     SECRET_KEY,
     create_access_token,
     create_refresh_token,
 )
-from jose import jwt
+from app.core.dependencies import get_user_service
+from app.services.userService import UserService
 
 router = APIRouter(prefix="/users", tags=["Users"])
 

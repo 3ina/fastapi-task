@@ -1,4 +1,5 @@
 from typing import Optional
+
 from pydantic import BaseModel
 
 from app.infrastructure.baseRepository import BaseRepository
@@ -12,9 +13,9 @@ class CreateTicketSchema(BaseModel):
 
 
 class UpdateTicketSchema(BaseModel):
-    ticket_number: Optional[str] = None
-    order_id: Optional[int] = None
-    passenger_id: Optional[int] = None
+    ticket_number: str | None = None
+    order_id: int | None = None
+    passenger_id: int | None = None
 
 
 class TicketRepository(

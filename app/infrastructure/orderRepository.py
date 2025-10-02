@@ -1,5 +1,7 @@
 from typing import Optional
+
 from pydantic import BaseModel
+
 from app.infrastructure.baseRepository import BaseRepository
 from app.infrastructure.models import OrderORM
 
@@ -11,9 +13,9 @@ class CreateOrderSchema(BaseModel):
 
 
 class UpdateOrderSchema(BaseModel):
-    code: Optional[str] = None
-    price: Optional[float] = None
-    user_id: Optional[int] = None
+    code: str | None = None
+    price: float | None = None
+    user_id: int | None = None
 
 
 class OrderRepository(BaseRepository[OrderORM, CreateOrderSchema, UpdateOrderSchema]):

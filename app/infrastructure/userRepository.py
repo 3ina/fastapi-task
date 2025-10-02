@@ -1,6 +1,8 @@
 from typing import Optional
+
 from pydantic import BaseModel
 from sqlalchemy import select
+
 from app.infrastructure.baseRepository import BaseRepository
 from app.infrastructure.models import UserORM
 

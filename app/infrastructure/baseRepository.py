@@ -13,7 +13,6 @@ from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 from app.core.database import Base
-from fastapi.encoders import jsonable_encoder
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -21,18 +20,18 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
 class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
-    def __init__(self, model: Type[ModelType], db: AsyncSession) -> None:
+    def __init__(self, model: type[ModelType], db: AsyncSession) -> None:
         self.model = model
         self.db = db
 
-    async def get(self, id: Any) -> Optional[ModelType]:
+    async def get(self, id: Any) -> ModelType | None:
         statement = select(self.model).where(self.model.id == id)
         result = await self.db.execute(statement)
         return result.scalar_one_or_none()
 
     async def get_multi(
         self, *, page: int = 1, size: int = 10
-    ) -> Tuple[Sequence[ModelType], int]:
+    ) -> tuple[Sequence[ModelType], int]:
         """
         return (ModelType , number of total record)
         """
@@ -59,7 +58,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self,
         *,
         db_obj: ModelType,
-        obj_in: Union[UpdateSchemaType, Dict[str, Any]],
+        obj_in: UpdateSchemaType | dict[str, Any],
     ) -> ModelType:
         """Update a record."""
         obj_data = jsonable_encoder(db_obj)
@@ -77,7 +76,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         await self.db.refresh(db_obj)
         return db_obj
 
-    async def remove(self, *, id: int) -> Optional[ModelType]:
+    async def remove(self, *, id: int) -> ModelType | None:
         """Delete a record by id."""
         obj = await self.get(id=id)
         if obj:

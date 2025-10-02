@@ -1,12 +1,11 @@
 import os
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
+from sqlalchemy import engine_from_config, pool
+
 from app.core.database import Base
-from app.infrastructure.models import PassengerORM, TicketORM, UserORM, OrderORM
+from app.infrastructure.models import OrderORM, PassengerORM, TicketORM, UserORM
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 SYNC_DATABASE_URL = DATABASE_URL.replace("+asyncpg", "")

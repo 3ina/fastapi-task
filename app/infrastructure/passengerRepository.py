@@ -1,8 +1,10 @@
-from typing import Optional
-from pydantic import BaseModel
 from datetime import date
-from app.infrastructure.models import PassengerORM, Gender
+from typing import Optional
+
+from pydantic import BaseModel
+
 from app.infrastructure.baseRepository import BaseRepository
+from app.infrastructure.models import Gender, PassengerORM
 
 
 class CreatePassengerSchema(BaseModel):
@@ -13,10 +15,10 @@ class CreatePassengerSchema(BaseModel):
 
 
 class UpdatePassengerSchema(BaseModel):
-    name: Optional[str] = None
-    national_id: Optional[str] = None
-    date_of_birth: Optional[date] = None
-    gender: Optional[Gender] = None
+    name: str | None = None
+    national_id: str | None = None
+    date_of_birth: date | None = None
+    gender: Gender | None = None
 
 
 class PassengerRepository(
