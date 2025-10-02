@@ -1,8 +1,5 @@
 # app/services/exceptions.py
-
-
-class ServiceException(Exception):
-    pass
+from app.exceptions.baseExcption import ServiceException
 
 
 class UserAlreadyExistsException(ServiceException):
