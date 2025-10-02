@@ -1,17 +1,20 @@
 from typing import (
+    Any,
+    Dict,
     Generic,
-    Sequence,
+    Optional,
     Tuple,
     Type,
     TypeVar,
-    Optional,
-    Any,
     Union,
-    Dict,
 )
+from collections.abc import Sequence
+
+from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
+
 from app.core.database import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
