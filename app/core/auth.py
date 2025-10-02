@@ -18,3 +18,17 @@ def verify_password(plain_text: str, hashed_password: str) -> bool:
     except ValueError:
         return False
     return value
+
+
+def create_access_token(data: dict, expires_delta: int = ACCESS_TOKEN_EXPIRES_SECONDS):
+    """
+    set expires_delta in second
+    """
+
+    to_encode = data.copy()
+    to_encode.update(
+        {
+            "exp": datetime.now(timezone.utc) + timedelta(seconds=expires_delta),
+            "type": "access",
+        }
+    )
