@@ -1,8 +1,8 @@
 from datetime import date
-from typing import Literal
+from typing import List, Literal, Sequence
 
 from pydantic import BaseModel
-
+from sqlalchemy import select
 from app.infrastructure.baseRepository import BaseRepository
 from app.infrastructure.models import PassengerORM
 
@@ -25,4 +25,9 @@ class UpdatePassengerSchema(BaseModel):
 class PassengerRepository(
     BaseRepository[PassengerORM, CreatePassengerSchema, UpdatePassengerSchema]
 ):
-    pass
+    async def get_passengers_for_user(self,*,user_id : int)->Sequence[PassengerORM]:
+        stmt = select(PassengerORM).where(PassengerORM.user_id==user_id)
+        passengers = await self.db.execute(stmt)
+        passengers = passengers.scalars().all()
+        return passengers
+
