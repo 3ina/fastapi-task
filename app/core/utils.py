@@ -1,4 +1,5 @@
 from passlib.context import CryptContext
+from datetime import date
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -13,3 +14,13 @@ def verify_password(plain_text: str, hashed_password: str) -> bool:
     except ValueError:
         return False
     return value
+
+
+def calculate_age(birth_date):
+    today = date.today()
+    age = (
+        today.year
+        - birth_date.year
+        - ((today.month, today.day) < (birth_date.month, birth_date.day))
+    )
+    return age
