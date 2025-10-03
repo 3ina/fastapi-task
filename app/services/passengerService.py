@@ -4,6 +4,7 @@ from app.infrastructure.passengerRepository import (
     CreatePassengerSchema,
 )
 from datetime import date
+from app.core.utils import calculate_age
 
 
 class PassengerService:
@@ -20,6 +21,7 @@ class PassengerService:
         date_of_birth: date,
     ):
         # TODO : complete validation and raise ecception in business logic layer
+        # TODO : add validation for check age
         schema = CreatePassengerSchema(
             user_id=user_id,
             name=name,
