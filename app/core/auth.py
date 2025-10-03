@@ -1,9 +1,8 @@
-from datetime import datetime, timedelta, timezone, UTC
+from datetime import datetime, timedelta, UTC
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 
 from app.core.config import settings
 from app.core.dependencies import get_user_service
@@ -17,21 +16,7 @@ ACCESS_TOKEN_EXPIRES_SECONDS = 1200
 REFRESH_TOKEN_EXPIRES_SECONDS = 900
 
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 oauth2_schema = OAuth2PasswordBearer(tokenUrl="/token/swagger")
-
-
-def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
-
-
-def verify_password(plain_text: str, hashed_password: str) -> bool:
-    try:
-        value = pwd_context.verify(plain_text, hashed_password)
-    except ValueError:
-        return False
-    return value
 
 
 def create_access_token(data: dict, expires_delta: int = ACCESS_TOKEN_EXPIRES_SECONDS):
