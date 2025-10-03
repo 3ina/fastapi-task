@@ -16,7 +16,7 @@ ACCESS_TOKEN_EXPIRES_SECONDS = 1200
 REFRESH_TOKEN_EXPIRES_SECONDS = 900
 
 
-oauth2_schema = OAuth2PasswordBearer(tokenUrl="/token/swagger")
+oauth2_schema = OAuth2PasswordBearer(tokenUrl="/users/token/swagger")
 
 
 def create_access_token(data: dict, expires_delta: int = ACCESS_TOKEN_EXPIRES_SECONDS):
