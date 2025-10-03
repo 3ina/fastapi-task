@@ -7,6 +7,7 @@ from app.core.config import settings
 from app.core.database import Base, engine
 from app.exceptions.baseExcption import AppException
 from app.interfaces.users_api import router as user_router
+from app.interfaces.passengers_api import router as passenger_router
 
 
 @asynccontextmanager
@@ -25,6 +26,7 @@ app = FastAPI(
 )
 
 app.include_router(user_router)
+app.include_router(passenger_router)
 
 
 @app.exception_handler(AppException)
