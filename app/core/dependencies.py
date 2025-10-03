@@ -7,6 +7,7 @@ from app.infrastructure.passengerRepository import PassengerRepository
 from app.infrastructure.userRepository import UserRepository
 from app.services.passengerService import PassengerService
 from app.services.userService import UserService
+from app.selectors.passengersSelector import PassengerSelector
 
 
 def get_user_repo(db: AsyncSession = Depends(get_db)) -> UserRepository:
@@ -19,13 +20,20 @@ def get_user_service(user_repo: UserRepository = Depends(get_user_repo)) -> User
     return service
 
 
-def get_passenger_repo(db: AsyncSession = Depends(get_db))-> PassengerRepository:
+def get_passenger_repo(db: AsyncSession = Depends(get_db)) -> PassengerRepository:
     repo = PassengerRepository(model=PassengerORM, db=db)
     return repo
 
 
 def get_passenger_service(
     passenger_repo: PassengerRepository = Depends(get_passenger_repo),
-)->PassengerService:
+) -> PassengerService:
     service = PassengerService(passenger_repo=passenger_repo)
     return service
+
+
+def get_passenger_selector(
+    passenger_repo: PassengerRepository = Depends(get_passenger_repo),
+) -> PassengerSelector:
+    selector = PassengerSelector(passenger_repo=passenger_repo)
+    return selector
