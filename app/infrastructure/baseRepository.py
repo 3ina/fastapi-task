@@ -1,12 +1,7 @@
 from typing import (
     Any,
-    Dict,
     Generic,
-    Optional,
-    Tuple,
-    Type,
     TypeVar,
-    Union,
 )
 from collections.abc import Sequence
 
@@ -50,7 +45,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return (result.scalars().all(), total_count)
 
     async def create(self, *, obj_in: CreateSchemaType) -> ModelType:
-        obj_in_data = jsonable_encoder(obj_in)
+        obj_in_data = obj_in.model_dump()
         db_obj = self.model(**obj_in_data)
         self.db.add(db_obj)
         await self.db.commit()
