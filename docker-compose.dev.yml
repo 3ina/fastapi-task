@@ -6,6 +6,7 @@ services:
     container_name: api
     volumes:
       - .:/app
+      - venv_data:/app/.venv
     ports:
       - "8000:8000"
     networks:
@@ -49,3 +50,4 @@ networks:
 volumes:
   postgres_data_dev:
   pgadmin_data_dev:
+  venv_data:
