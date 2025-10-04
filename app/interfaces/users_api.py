@@ -11,8 +11,9 @@ from app.core.auth import (
     create_access_token,
     create_refresh_token,
 )
-from app.core.dependencies import get_user_service
+from app.core.dependencies import get_user_service, get_user_selector
 from app.services.userService import UserService
+from app.selectors.userSelector import UserSelector
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -69,7 +70,7 @@ class RefreshToken(BaseModel):
 @router.post("/refresh")
 async def refresh_token(
     refresh_token_input: RefreshToken,
-    user_service: UserService = Depends(get_user_service),
+    user_selector: UserSelector = Depends(get_user_selector),
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -85,7 +86,7 @@ async def refresh_token(
     if username is None:
         raise credentials_exception
 
-    user = await user_service.get_by_username(username=username)
+    user = await user_selector.get_by_username(username=username)
     if not user:
         raise credentials_exception
 
