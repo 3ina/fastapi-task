@@ -1,4 +1,5 @@
 import enum
+from datetime import datetime, UTC
 
 from sqlalchemy import (
     DATE,
@@ -7,6 +8,7 @@ from sqlalchemy import (
     BigInteger,
     Column,
     Enum,
+    DateTime,
     ForeignKey,
     UniqueConstraint,
 )
@@ -59,6 +61,18 @@ class TicketORM(Base):
     ticket_number = Column(VARCHAR(50), nullable=False)
     order_id = Column(BigInteger, ForeignKey("orders.id"), nullable=False)
     passenger_id = Column(BigInteger, ForeignKey("passengers.id"), nullable=False)
+    destination_id = Column(BigInteger, ForeignKey("airports.id"), nullable=False)
+    origin_id = Column(BigInteger, ForeignKey("airports.id"), nullable=False)
+    departure_time = Column(
+        DateTime(timezone=True),
+        nullable=True,
+        default=lambda: datetime.now(UTC),
+    )
+    arrival_time = Column(
+        DateTime(timezone=True),
+        nullable=True,
+        default=lambda: datetime.now(UTC),
+    )
 
     __table_args__ = (
         UniqueConstraint("ticket_number", name="uq_ticket_number"),
