@@ -1,5 +1,7 @@
 from passlib.context import CryptContext
 from datetime import date
+import random
+import string
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -24,3 +26,8 @@ def calculate_age(birth_date):
         - ((today.month, today.day) < (birth_date.month, birth_date.day))
     )
     return age
+
+
+def generate_random_code(length=6):
+    characters = string.ascii_uppercase + string.digits
+    return "".join(random.choices(characters, k=length))
