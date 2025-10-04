@@ -33,9 +33,19 @@ class UserORM(Base):
 class OrderORM(Base):
     __tablename__ = "orders"
     id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
-    code = Column(VARCHAR(20), nullable=False)
-    price = Column(DECIMAL(19, 4))
+    code = Column(VARCHAR(50), nullable=False)
     user_id = Column(BigInteger, ForeignKey("users.id"), nullable=False)
+    destination_id = Column(BigInteger, ForeignKey("airports.id"), nullable=False)
+    origin_id = Column(BigInteger, ForeignKey("airports.id"), nullable=False)
+    flight_id = Column(VARCHAR(50), nullable=False)
+    departure_time = Column(
+        DateTime(timezone=True),
+        nullable=False,
+    )
+    arrival_time = Column(
+        DateTime(timezone=True),
+        nullable=False,
+    )
 
     __table_args__ = (UniqueConstraint("code", name="uq_code_order"),)
 
@@ -59,21 +69,9 @@ class TicketORM(Base):
     __tablename__ = "tickets"
     id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
     ticket_number = Column(VARCHAR(50), nullable=False)
+    price = Column(DECIMAL(19, 4))
     order_id = Column(BigInteger, ForeignKey("orders.id"), nullable=False)
     passenger_id = Column(BigInteger, ForeignKey("passengers.id"), nullable=False)
-    destination_id = Column(BigInteger, ForeignKey("airports.id"), nullable=False)
-    origin_id = Column(BigInteger, ForeignKey("airports.id"), nullable=False)
-    departure_time = Column(
-        DateTime(timezone=True),
-        nullable=True,
-        default=lambda: datetime.now(UTC),
-    )
-    arrival_time = Column(
-        DateTime(timezone=True),
-        nullable=True,
-        default=lambda: datetime.now(UTC),
-    )
-
     __table_args__ = (
         UniqueConstraint("ticket_number", name="uq_ticket_number"),
         UniqueConstraint("order_id", "passenger_id", name="uq_order_passenger"),
