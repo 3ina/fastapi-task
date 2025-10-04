@@ -10,6 +10,7 @@ from app.services.passengerService import PassengerService
 from app.services.userService import UserService
 from app.selectors.passengersSelector import PassengerSelector
 from app.selectors.airportSelector import AirportSelector
+from app.selectors.flightSelector import FlightSelector
 
 
 def get_user_repo(db: AsyncSession = Depends(get_db)) -> UserRepository:
@@ -51,3 +52,8 @@ def get_airport_selector(
 ) -> AirportSelector:
     selector = AirportSelector(airport_repo=airport_repo)
     return selector
+
+
+def get_flight_selector() -> FlightSelector:
+    flight_selector = FlightSelector()
+    return flight_selector
