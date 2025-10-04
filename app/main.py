@@ -11,6 +11,7 @@ from app.interfaces.users_api import router as user_router
 from app.interfaces.passengers_api import router as passenger_router
 from app.interfaces.airports_api import router as airport_router
 from app.interfaces.flights_api import router as flight_router
+from app.interfaces.orders_api import router as order_router
 
 
 @asynccontextmanager
@@ -32,6 +33,7 @@ app.include_router(user_router)
 app.include_router(passenger_router)
 app.include_router(airport_router)
 app.include_router(flight_router)
+app.include_router(order_router)
 
 
 @app.exception_handler(AppException)
