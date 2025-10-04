@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
@@ -8,6 +9,7 @@ from app.core.database import Base, engine
 from app.exceptions.baseExcption import AppException
 from app.interfaces.users_api import router as user_router
 from app.interfaces.passengers_api import router as passenger_router
+from app.interfaces.airports_api import router as airport_router
 
 
 @asynccontextmanager
@@ -27,6 +29,7 @@ app = FastAPI(
 
 app.include_router(user_router)
 app.include_router(passenger_router)
+app.include_router(airport_router)
 
 
 @app.exception_handler(AppException)
