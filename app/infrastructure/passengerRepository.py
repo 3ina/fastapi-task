@@ -25,9 +25,18 @@ class UpdatePassengerSchema(BaseModel):
 class PassengerRepository(
     BaseRepository[PassengerORM, CreatePassengerSchema, UpdatePassengerSchema]
 ):
-    async def get_passengers_for_user(self,*,user_id : int)->Sequence[PassengerORM]:
-        stmt = select(PassengerORM).where(PassengerORM.user_id==user_id)
+    async def get_passengers_for_user(self, *, user_id: int) -> Sequence[PassengerORM]:
+        stmt = select(PassengerORM).where(PassengerORM.user_id == user_id)
         passengers = await self.db.execute(stmt)
         passengers = passengers.scalars().all()
         return passengers
 
+    async def get_passenger_for_user(
+        self, *, user_id: int, passenger_id: int
+    ) -> PassengerORM | None:
+        stmt = select(PassengerORM).where(
+            PassengerORM.id == passenger_id, PassengerORM.user_id == user_id
+        )
+        passenger = await self.db.execute(stmt)
+        passenger = passenger.scalar_one_or_none()
+        return passenger
