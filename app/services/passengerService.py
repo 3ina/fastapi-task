@@ -1,15 +1,17 @@
 from typing import Literal
+
+from sqlalchemy.ext.asyncio import AsyncSession
 from app.infrastructure.passengerRepository import (
     PassengerRepository,
     CreatePassengerSchema,
 )
 from datetime import date
-from app.core.utils import calculate_age
 
 
 class PassengerService:
-    def __init__(self, *, passenger_repo: PassengerRepository):
+    def __init__(self, *, db: AsyncSession, passenger_repo: PassengerRepository):
         self.passenger_repo = passenger_repo
+        self.db = db
 
     async def create_passenger(
         self,
@@ -30,6 +32,7 @@ class PassengerService:
             date_of_birth=date_of_birth,
         )
         db_passenger = await self.passenger_repo.create(obj_in=schema)
+        await self.db.commit()
         return {
             "message": "successfully ad passenger",
             "data": {
