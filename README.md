@@ -31,7 +31,15 @@ Start the server
 ```
 
 
+Run tests
+
+```bash
+  docker compose -f docker-compose.dev.yml exec api uv run pytest -v
+```
+
+
 ## Authors
 
 - [@sina roydel](https://www.github.com/3ina)
+
 
